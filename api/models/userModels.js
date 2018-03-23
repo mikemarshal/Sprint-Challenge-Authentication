@@ -39,16 +39,11 @@ UserSchema.methods.checkPassword = function(plainTextPW, callBack) {
   // Fill this method in with the Proper password comparing, bcrypt.compare()
   // Your controller will be responsible for sending the information here for password comparison
   // Once you have the user, you'll need to pass the encrypted pw and the plaintext pw to the compare function
-  return
-    new Promise((resolve, reject) => {
-      return bcrypt
-        .compare(callBack, plainTextPW)
-        .then((match) => {
-          resolve(match);
-        })
-        .catch((err) => reject(err));
+  bcrypt.compare(plainTextPW, this.password)
+    .then(result => {
+      callBack(null, result)
     })
-    .catch((err) => err);
+    .catch(err => callBack(err));
 };
 
 // if you're really stuck with this at this point, you can reference this document.
